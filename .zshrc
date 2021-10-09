@@ -8,13 +8,11 @@ export ZSH="/home/allanbraun/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="robbyrussell"
 ZSH_THEME="spaceship"
-
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# a theme from this variable instead of looking in $ZSH/themes/
 # If set to an empty array, this variable will have no effect.
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
@@ -35,7 +33,7 @@ ZSH_THEME="spaceship"
 # export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS=true
+# DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
 # DISABLE_LS_COLORS="true"
@@ -47,6 +45,8 @@ ZSH_THEME="spaceship"
 # ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
+# Caution: this setting can cause issues with multiline prompts (zsh 5.7.1 and newer seem to work)
+# See https://github.com/ohmyzsh/ohmyzsh/issues/5765
 # COMPLETION_WAITING_DOTS="true"
 
 # Uncomment the following line if you want to disable marking untracked files
@@ -60,18 +60,19 @@ ZSH_THEME="spaceship"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="dd/mm/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
 # Which plugins would you like to load?
-# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-autosuggestions)
-# plugins=(zsh-autosuggestions)
+eval $(thefuck --alias)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting sudo transfer yarn)
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -97,30 +98,19 @@ source $ZSH/oh-my-zsh.sh
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-alias zconfig="gedit ~/.zshrc"
-alias vpn="sudo openfortivpn -c ~/vpn"
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
+alias zconfig="gedit ~/.zshrc;omz reload"
 alias cep="echo 82220-050 | xclip -sel clip;echo 82220-050"
-alias go44="rvm use 2.5.1 | cd ~/projetos/go44/web_go44"
 alias drive="firefox https://drive.google.com/drive/my-drive"
-alias cdpost="cd ~/projetos/laravel/post"
-alias post="lwsm restore post"
-alias dotsc="airdots; exit"
-alias mypserv="dotnet run --project ~/projetos/myp/MakeYourPriceAPI/MYP.API"
-
-alias antlr4='java -jar /usr/local/lib/antlr-4.8-complete.jar'
-alias grun='java org.antlr.v4.gui.TestRig'
+alias mysqld="docker run --name my-mysql -e MYSQL_ROOT_PASSWORD=secret -v $HOME/mysql-data:/var/lib/mysql -d mysql:8.0"
 
 
 #config spaceship
-SPACESHIP_CHAR_SYMBOL="🐧➜  "
+SPACESHIP_CHAR_SYMBOL="🛸λ "
 
+export PATH=$HOME/.emacs.d/bin:$PATH
 
-# ruby
-source /usr/share/rvm/scripts/rvm
-# [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-
-
-# php
-#echo 'export PATH="$HOME/.config/composer/vendor/bin:$PATH"' >> ~/.zshrc
-export PATH="$HOME/.config/composer/vendor/bin:$PATH"
-
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
